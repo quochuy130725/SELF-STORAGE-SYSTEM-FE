@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Search, ChevronDown, Edit2, Lock, Unlock, ShieldAlert, Users } from 'lucide-react';
 
 const mockUsers = [

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Search, ChevronDown, Key, AlertCircle, RefreshCw, LogOut, ArrowRight, ArrowLeft, X, Box, Bell, ShieldCheck } from 'lucide-react';
+import { useState } from 'react';
+import { Search, ChevronDown, Key, AlertCircle, RefreshCw, LogOut, ArrowRight, X, Box, Bell, ShieldCheck } from 'lucide-react';
 
 export default function CustomerDashboard() {
   const [showCode, setShowCode] = useState(false);

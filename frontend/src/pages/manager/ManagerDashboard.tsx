@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Box, LayoutDashboard, Grid, FileText, Users, Calendar, Download,
   TrendingUp, BarChart3, Activity, AlertCircle, CheckCircle2,
@@ -182,10 +182,10 @@ export default function ManagerDashboard() {
                     <Tooltip
                       cursor={{ fill: 'rgba(201, 164, 75, 0.1)' }}
                       contentStyle={{ borderRadius: '12px', border: '1px solid rgba(30, 39, 35, 0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}
-                      formatter={(value: number) => [`$${value.toLocaleString()}`, 'Doanh thu']}
+                      formatter={(value: any) => [`$${value.toLocaleString()}`, 'Doanh thu']}
                     />
                     <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={40}>
-                      {chartData.map((entry, index) => (
+                      {chartData.map((_entry, index) => (
                         <Cell key={`cell-${index}`} fill={index < 8 ? '#4a5751' : '#c9a44b'} />
                       ))}
                     </Bar>

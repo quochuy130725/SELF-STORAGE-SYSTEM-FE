@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Key, ClipboardList, Settings, User, Filter, ArrowRight, Clock, LogIn, AlertCircle, Calendar, Search, CheckCircle2, AlertTriangle, FileEdit } from 'lucide-react';
+import { useState } from 'react';
+import { Key, ClipboardList, Settings, User, Filter, ArrowRight, Clock, LogIn, AlertCircle, Search, CheckCircle2, AlertTriangle, FileEdit } from 'lucide-react';
 
 export default function StaffDashboard() {
   const [activeTask, setActiveTask] = useState('t1');
