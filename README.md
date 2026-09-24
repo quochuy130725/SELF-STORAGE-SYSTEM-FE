@@ -22,13 +22,13 @@ Dự án giao diện web cho **Hệ thống Quản lý và Cho thuê Kho lưu tr
 
 ## 🎨 Visual Direction & Design Rules
 
-- **Phong cách chủ đạo:** Industrial Brutalism kết hợp Cinematic Dark Mode.
-- **Tone màu:** Nền đen/xám than (`zinc-950` / `zinc-900`), viền rõ nét, điểm nhấn màu vàng cảnh báo/neon (`amber-400` / `yellow-400`).
-- **Typography:** Sans-serif đậm nét, khối vuông vức mô phỏng cấu trúc ô kho lưu trữ thực tế.
-- **Nguyên tắc tương tác:**
-  - Nút bấm chính (CTA) nổi bật, có loading spinner khi gọi API.
-  - Lỗi nhập liệu (Validation Errors) phải hiển thị trực tiếp dưới chân ô input.
-  - Tuyệt đối không dùng các template Bootstrap mặc định bo tròn đa sắc.
+- **Phong cách chủ đạo:** Modern Corporate Soft-UI kết hợp với Cinematic & Vintage Lighting.
+- **Tone màu:** Nền trầm có chiều sâu (Deep Charcoal hoặc Muted Forest Green - Xanh lá trầm cổ điển). Các điểm nhấn và nút bấm Call-to-Action sử dụng màu vàng đồng ấm (Warm Brass/Yellow).
+- **Typography:** Geometric Sans-serif (Poppins, Outfit hoặc Montserrat) cho tiêu đề, tạo cảm giác thân thiện, rõ ràng.
+- **Nguyên tắc tương tác & Hình khối:**
+  - Sử dụng các thẻ thông tin dạng viên thuốc (pill-shaped) hoặc bo góc mềm mại (`rounded-2xl`).
+  - Ứng dụng kỹ thuật xếp chồng (Overlapping floating elements) với bóng đổ (soft shadow) để tạo chiều sâu thay vì thiết kế phẳng lì.
+  - Nút bấm chính nổi bật, có loading spinner khi gọi API và trạng thái hover đổi màu rõ ràng.
 
 ---
 
@@ -48,8 +48,17 @@ src/
 │   ├── support/        # Tiếp nhận, phân công và xử lý sự cố tại chỗ
 │   └── report/         # Báo cáo doanh thu, tỷ lệ lấp đầy
 ├── hooks/              # Custom hooks dùng chung toàn dự án
-├── layouts/            # Khung giao diện theo vai trò (CustomerLayout, ManagerLayout, AdminLayout)
-├── pages/              # Nơi lắp ráp các feature thành trang hoàn chỉnh (Customer, Staff, Manager, Admin)
+├── layouts/            # Khung UI (Shell) bọc ngoài các trang
+│   ├── CustomerLayout.tsx     # Khung giao diện khách hàng (Header, Footer)
+│   ├── StaffLayout.tsx        # Khung tối ưu Mobile/Tablet cho nhân viên (Bottom Nav/Sidebar gọn)
+│   ├── ManagerLayout.tsx      # Khung Dashboard chung cho Quản lý cơ sở & Quản lý vận hành
+│   └── AdminLayout.tsx        # Khung giao diện Quản trị viên hệ thống
+├── pages/              # Nơi lắp ráp Feature thành các Route hoàn chỉnh
+│   ├── admin/          # Màn hình System Admin (Quản lý User, Logs)
+│   ├── customer/       # Màn hình Storage Customer (Tìm kho, Booking, Quản lý của tôi)
+│   ├── facility/       # Màn hình Facility Manager (Quản lý 1 cơ sở, điều phối nhân viên)
+│   ├── operations/     # Màn hình Business Ops (Báo cáo hệ thống, cấu hình giá)
+│   └── staff/          # Màn hình Facility Staff (To-do list, Check-in, Xử lý sự cố)
 ├── routes/             # Cấu hình đường dẫn và phân quyền bảo vệ route (ProtectedRoute / RBAC)
 ├── services/           # Cấu hình Axios client, Interceptors xử lý token & lỗi tập trung
 ├── store/              # Quản lý Global State (Zustand: authStore, bookingStore)
