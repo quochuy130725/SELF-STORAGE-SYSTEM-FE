@@ -1,40 +1,65 @@
 import { Link } from 'react-router-dom';
-import { Users, LayoutDashboard, Settings, UserCircle } from 'lucide-react';
+import { UserCircle, Users, LayoutDashboard, Settings } from 'lucide-react';
 
 export default function DemoGateway() {
   const portals = [
-    { title: 'Customer Portal', desc: 'Giao diện đặt kho & quản lý dành cho khách thuê.', path: '/customer', icon: <UserCircle size={32} />, color: 'bg-[#c9a44b]' },
-    { title: 'Staff Interface', desc: 'Tablet-view nghiệm thu kho cho nhân viên cơ sở.', path: '/staff', icon: <Users size={32} />, color: 'bg-[#25352d] text-[#f2eee4]' },
-    { title: 'Manager Dashboard', desc: 'Báo cáo số liệu & điều phối dành cho Quản lý.', path: '/manager', icon: <LayoutDashboard size={32} />, color: 'bg-white border border-[#1e272324]' },
-    { title: 'Admin Panel', desc: 'Quản lý phân quyền & System Logs bảo mật.', path: '/admin', icon: <Settings size={32} />, color: 'bg-[#f8f6f0] border border-[#1e272324]' },
+    { 
+      title: 'Customer Portal', 
+      desc: 'Giao diện đặt kho & quản lý dành cho khách thuê.', 
+      path: '/customer', 
+      icon: <UserCircle className="w-8 h-8 text-slate-400 group-hover:text-emerald-600 transition-colors" /> 
+    },
+    { 
+      title: 'Staff Interface', 
+      desc: 'Tablet-view nghiệm thu kho cho nhân viên cơ sở.', 
+      path: '/staff', 
+      icon: <Users className="w-8 h-8 text-slate-400 group-hover:text-emerald-600 transition-colors" /> 
+    },
+    { 
+      title: 'Manager Dashboard', 
+      desc: 'Báo cáo số liệu & điều phối dành cho Quản lý.', 
+      path: '/manager', 
+      icon: <LayoutDashboard className="w-8 h-8 text-slate-400 group-hover:text-emerald-600 transition-colors" /> 
+    },
+    { 
+      title: 'Admin Panel', 
+      desc: 'Quản lý phân quyền & System Logs bảo mật.', 
+      path: '/admin', 
+      icon: <Settings className="w-8 h-8 text-slate-400 group-hover:text-emerald-600 transition-colors" /> 
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-[#f2eee4] text-[#1e2723] flex flex-col items-center justify-center p-6">
-      <div className="max-w-4xl w-full">
-        <div className="text-center mb-12">
-          <h1 className="text-sm font-bold tracking-widest uppercase text-[#c9a44b] mb-2">Hệ thống Quản lý Kho tự quản</h1>
-
-          <p className="text-[#1e2723]/70">Chọn một phân hệ bên dưới để trải nghiệm UI/UX nguyên mẫu.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {portals.map((portal) => (
-            <Link
-              key={portal.path}
-              to={portal.path}
-              className={`group relative p-8 rounded-2xl flex flex-col items-start transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${portal.color}`}
-            >
-              <div className="mb-6 opacity-80 group-hover:opacity-100 transition-opacity">{portal.icon}</div>
-              <h3 className="text-2xl font-medium mb-2">{portal.title}</h3>
-              <p className="opacity-80 text-sm mb-8">{portal.desc}</p>
-              <div className="mt-auto flex items-center gap-2 font-medium">
-                Truy cập <span className="transition-transform group-hover:translate-x-2">→</span>
-              </div>
-            </Link>
-          ))}
-        </div>
+    <div className="bg-slate-50 flex flex-col items-center justify-center min-h-screen p-6 font-sans">
+      
+      {/* Header */}
+      <div className="text-center">
+        <h2 className="text-emerald-600 font-bold tracking-widest uppercase text-sm mb-2">STORAGE SYS</h2>
+        <h1 className="text-3xl font-bold text-slate-900">Hệ thống Quản lý Kho</h1>
+        <p className="text-slate-500 mt-2">Chọn một phân hệ để truy cập.</p>
       </div>
+
+      {/* Minimalist Navigation Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full mt-12">
+        {portals.map((portal) => (
+          <Link
+            key={portal.path}
+            to={portal.path}
+            className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between group cursor-pointer transition-all hover:border-emerald-500 hover:shadow-md"
+          >
+            <div>
+              {portal.icon}
+              <h3 className="text-lg font-bold text-slate-900 mt-4">{portal.title}</h3>
+              <p className="text-sm text-slate-500 mt-2">{portal.desc}</p>
+            </div>
+            
+            <div className="text-sm font-semibold text-emerald-600 mt-6 opacity-80 group-hover:opacity-100 transition-opacity flex items-center">
+              Truy cập <span className="ml-1 transition-transform group-hover:translate-x-1">→</span>
+            </div>
+          </Link>
+        ))}
+      </div>
+      
     </div>
   );
 }

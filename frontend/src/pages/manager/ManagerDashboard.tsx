@@ -1,347 +1,249 @@
-import { useState } from 'react';
-import {
-  Box, LayoutDashboard, Grid, FileText, Users, Calendar, Download,
-  TrendingUp, BarChart3, Activity, AlertCircle, CheckCircle2,
-  MoreHorizontal, Plus, Send, Bell
-} from 'lucide-react';
-import {
-  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
-} from 'recharts';
-
-const chartData = [
-  { name: 'Jan', value: 20000 },
-  { name: 'Feb', value: 25000 },
-  { name: 'Mar', value: 30000 },
-  { name: 'Apr', value: 32000 },
-  { name: 'May', value: 40000 },
-  { name: 'Jun', value: 45000 },
-  { name: 'Jul', value: 42000 },
-  { name: 'Aug', value: 50000 },
-  { name: 'Sep', value: 65000 },
-  { name: 'Oct', value: 75000 },
-  { name: 'Nov', value: 82000 },
-  { name: 'Dec', value: 90000 },
-];
+import { Package, LayoutDashboard, FileText, Users, Download, TrendingUp, BarChart3, Activity, Bell } from 'lucide-react';
 
 export default function ManagerDashboard() {
-  const [activeTab, setActiveTab] = useState('overview');
+  const chartData = [
+    { month: 'Thg 3', revenue: 45, fill: 60 },
+    { month: 'Thg 4', revenue: 52, fill: 65 },
+    { month: 'Thg 5', revenue: 58, fill: 72 },
+    { month: 'Thg 6', revenue: 65, fill: 75 },
+    { month: 'Thg 7', revenue: 70, fill: 82 },
+    { month: 'Thg 8', revenue: 78, fill: 88 },
+    { month: 'Thg 9', revenue: 84.2, fill: 92.4, active: true },
+  ];
 
   return (
-    <div className="h-screen flex bg-[#f2eee4] text-[#1e2723] font-sans antialiased overflow-hidden selection:bg-[#c9a44b] selection:text-[#f2eee4]">
-
-      {/* 2. Left Sidebar */}
-      <aside className="w-64 bg-[#25352d] flex flex-col shrink-0">
-        <div className="p-8 border-b border-[#f2eee4]/10">
+    <div className="h-screen flex bg-slate-50 font-sans text-slate-900 overflow-hidden">
+      {/* SIDEBAR */}
+      <div className="w-64 bg-white border-r border-slate-200 flex flex-col">
+        <div className="h-16 flex items-center px-6 border-b border-slate-200 gap-2">
+          <Package className="text-emerald-600" size={24} />
+          {/* LOGO: Ultra-bold Industrial Typography */}
+          <span className="uppercase tracking-wide text-2xl text-slate-900 mt-0.5" style={{ fontFamily: "'Anton', sans-serif" }}>STORAGE SYS</span>
+        </div>
+        
+        <div className="p-4 space-y-1 flex-1">
+          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 mt-2 px-2">Bảng điều khiển</div>
+          <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-emerald-50 text-emerald-700 font-bold border-l-4 border-emerald-600">
+            <LayoutDashboard size={20} /> Tổng quan
+          </button>
+          <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 font-medium hover:bg-slate-50 hover:text-slate-900 transition-colors border-l-4 border-transparent">
+            <Package size={20} /> Kho & Chính sách
+          </button>
+          <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 font-medium hover:bg-slate-50 hover:text-slate-900 transition-colors border-l-4 border-transparent">
+            <FileText size={20} /> Hợp đồng
+          </button>
+          <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 font-medium hover:bg-slate-50 hover:text-slate-900 transition-colors border-l-4 border-transparent">
+            <Users size={20} /> Điều phối nhân sự
+          </button>
+        </div>
+        
+        <div className="p-4 border-t border-slate-200">
           <div className="flex items-center gap-3">
-            <div className="bg-[#c9a44b] text-[#1e2723] p-2 rounded-xl">
-              <Box className="w-6 h-6" strokeWidth={1.5} />
-            </div>
+            <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700">NB</div>
             <div>
-              <span className="font-bold tracking-[0.2em] uppercase text-xs text-[#f2eee4] block">Storage / Co</span>
-              <span className="text-[#f2eee4]/60 text-xs">Manager</span>
+              <div className="font-bold text-slate-900 text-sm">Nguyễn Thị B</div>
+              <div className="text-xs text-slate-500">Quản lý Cơ sở</div>
             </div>
           </div>
         </div>
+      </div>
 
-        <nav className="p-4 space-y-2 flex-1">
-          <button
-            onClick={() => setActiveTab('overview')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors cursor-pointer ${activeTab === 'overview' ? 'bg-[#f2eee4] text-[#25352d] font-medium' : 'text-[#f2eee4]/70 hover:bg-[#f2eee4]/5 hover:text-[#f2eee4]'
-              }`}
-          >
-            <LayoutDashboard className="w-5 h-5" strokeWidth={1.5} />
-            Tổng quan
-          </button>
-
-          <button
-            onClick={() => setActiveTab('units')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors cursor-pointer ${activeTab === 'units' ? 'bg-[#f2eee4] text-[#25352d] font-medium' : 'text-[#f2eee4]/70 hover:bg-[#f2eee4]/5 hover:text-[#f2eee4]'
-              }`}
-          >
-            <Grid className="w-5 h-5" strokeWidth={1.5} />
-            Kho & Chính sách
-          </button>
-
-          <button
-            onClick={() => setActiveTab('contracts')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors cursor-pointer ${activeTab === 'contracts' ? 'bg-[#f2eee4] text-[#25352d] font-medium' : 'text-[#f2eee4]/70 hover:bg-[#f2eee4]/5 hover:text-[#f2eee4]'
-              }`}
-          >
-            <FileText className="w-5 h-5" strokeWidth={1.5} />
-            Hợp đồng
-          </button>
-
-          <button
-            onClick={() => setActiveTab('staff')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors cursor-pointer ${activeTab === 'staff' ? 'bg-[#f2eee4] text-[#25352d] font-medium' : 'text-[#f2eee4]/70 hover:bg-[#f2eee4]/5 hover:text-[#f2eee4]'
-              }`}
-          >
-            <Users className="w-5 h-5" strokeWidth={1.5} />
-            Điều phối nhân sự
-          </button>
-        </nav>
-
-        <div className="p-6 border-t border-[#f2eee4]/10">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#f2eee4]/10 flex items-center justify-center">
-              <span className="text-[#f2eee4] font-medium text-sm">MB</span>
+      {/* MAIN CONTENT */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Top Header */}
+        <div className="h-16 bg-white border-b border-slate-200 px-8 flex items-center justify-between shrink-0">
+          <h1 className="text-2xl font-bold text-slate-900">Tổng quan Cơ sở</h1>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-sm font-medium text-slate-600">
+              Bộ lọc: 
+              <select className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 outline-none focus:border-emerald-500 font-medium text-slate-900">
+                <option>Tháng này</option>
+                <option>Tháng trước</option>
+              </select>
             </div>
-            <div>
-              <p className="text-sm font-medium text-[#f2eee4]">Quản lý Cơ sở</p>
-              <p className="text-xs text-[#f2eee4]/50">Cơ sở B</p>
-            </div>
+            <button className="flex items-center gap-2 bg-white border border-slate-300 text-slate-700 px-4 py-2 rounded-lg font-bold hover:bg-slate-50 transition-colors shadow-sm text-sm">
+              <Download size={16} /> Xuất báo cáo
+            </button>
           </div>
         </div>
-      </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto p-8 lg:p-12">
-        <div className="max-w-7xl mx-auto space-y-12">
-
-          {/* 3. Top Header */}
-          <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div>
-              <span className="text-[10px] uppercase tracking-widest text-[#1e2723]/50 font-bold mb-2 block">Bảng điều khiển</span>
-              <h1 className="text-4xl font-normal tracking-tight">Tổng quan cơ sở</h1>
-            </div>
-            <div className="flex items-center gap-4">
-              <button className="flex items-center gap-2 px-5 py-3 rounded-full border border-[#1e2723]/15 hover:bg-white transition-colors text-sm font-medium cursor-pointer active:scale-95">
-                <Calendar className="w-4 h-4 text-[#1e2723]/60" strokeWidth={1.5} />
-                This Month
-              </button>
-              <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#c9a44b] hover:bg-[#b89543] transition-colors text-[#1e2723] text-sm font-medium cursor-pointer active:scale-95">
-                <Download className="w-4 h-4" strokeWidth={1.5} />
-                Export PDF
-              </button>
-            </div>
-          </header>
-
-          {/* 4. Top Row (Key Metrics) */}
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-8 rounded-3xl border border-[#1e2723]/15 bg-transparent hover:bg-white/50 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-              <div className="flex items-center gap-3 mb-6">
-                <TrendingUp className="w-5 h-5 text-[#c9a44b]" strokeWidth={1.5} />
-                <span className="text-sm font-medium text-[#1e2723]/60 uppercase tracking-wider">Doanh thu tháng</span>
+        {/* Scrollable Dashboard Area */}
+        <div className="flex-1 overflow-y-auto p-8">
+          
+          {/* KPI STAT CARDS */}
+          <div className="grid grid-cols-4 gap-6 mb-6">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:-translate-y-1 transition-transform duration-300">
+              <div className="flex justify-between items-start mb-2">
+                <div className="text-sm font-bold text-slate-500">Doanh thu tháng</div>
+                <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg"><TrendingUp size={18}/></div>
               </div>
-              <h2 className="text-5xl font-medium tracking-tight mb-2">$84,250</h2>
-              <p className="text-sm text-green-600 font-medium">+12.5% from last month</p>
+              {/* BIG METRIC: Ultra-bold Industrial Typography */}
+              <div className="text-4xl uppercase tracking-wide text-slate-900 mt-1 mb-3" style={{ fontFamily: "'Anton', sans-serif" }}>$84,250</div>
+              <span className="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-2 py-0.5 rounded">
+                +12.5% so với tháng trước
+              </span>
             </div>
 
-            <div className="p-8 rounded-3xl border border-[#1e2723]/15 bg-transparent hover:bg-white/50 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-              <div className="flex items-center gap-3 mb-6">
-                <BarChart3 className="w-5 h-5 text-[#c9a44b]" strokeWidth={1.5} />
-                <span className="text-sm font-medium text-[#1e2723]/60 uppercase tracking-wider">Tỷ lệ lấp đầy</span>
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:-translate-y-1 transition-transform duration-300">
+              <div className="flex justify-between items-start mb-2">
+                <div className="text-sm font-bold text-slate-500">Tỷ lệ lấp đầy</div>
+                <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg"><BarChart3 size={18}/></div>
               </div>
-              <h2 className="text-5xl font-medium tracking-tight mb-2">92.4%</h2>
-              <p className="text-sm text-[#1e2723]/50 font-medium">14 units available</p>
+              {/* BIG METRIC: Ultra-bold Industrial Typography */}
+              <div className="text-4xl uppercase tracking-wide text-slate-900 mt-1 mb-3" style={{ fontFamily: "'Anton', sans-serif" }}>92.4%</div>
+              <span className="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-2 py-0.5 rounded">
+                +2.1% so với tháng trước
+              </span>
             </div>
 
-            <div className="p-8 rounded-3xl border border-[#1e2723]/15 bg-transparent hover:bg-white/50 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-              <div className="flex items-center gap-3 mb-6">
-                <Activity className="w-5 h-5 text-[#c9a44b]" strokeWidth={1.5} />
-                <span className="text-sm font-medium text-[#1e2723]/60 uppercase tracking-wider">Hoạt động đang diễn ra</span>
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:-translate-y-1 transition-transform duration-300">
+              <div className="flex justify-between items-start mb-2">
+                <div className="text-sm font-bold text-slate-500">Hợp đồng hoạt động</div>
+                <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg"><Activity size={18}/></div>
               </div>
-              <h2 className="text-5xl font-medium tracking-tight mb-2">18</h2>
-              <p className="text-sm text-[#1e2723]/50 font-medium">8 công việc chờ xử lý</p>
+              {/* BIG METRIC: Ultra-bold Industrial Typography */}
+              <div className="text-4xl uppercase tracking-wide text-slate-900 mt-1 mb-3" style={{ fontFamily: "'Anton', sans-serif" }}>482</div>
+              <span className="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-2 py-0.5 rounded">
+                18 hợp đồng mới
+              </span>
             </div>
-          </section>
 
-          {/* 5. Middle Row (2/3 & 1/3) */}
-          <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:-translate-y-1 transition-transform duration-300">
+              <div className="flex justify-between items-start mb-2">
+                <div className="text-sm font-bold text-slate-500">Yêu cầu chờ xử lý</div>
+                <div className="p-2 bg-amber-50 text-amber-600 rounded-lg"><Bell size={18}/></div>
+              </div>
+              {/* BIG METRIC: Ultra-bold Industrial Typography */}
+              <div className="text-4xl uppercase tracking-wide text-slate-900 mt-1 mb-3" style={{ fontFamily: "'Anton', sans-serif" }}>14</div>
+              <span className="inline-block bg-amber-50 text-amber-700 border border-amber-200 text-xs font-bold px-2 py-0.5 rounded">
+                Cần xử lý hôm nay
+              </span>
+            </div>
+          </div>
 
-            {/* Main Chart Placeholder (2/3 width) */}
-            <div className="lg:col-span-2 p-8 rounded-3xl border border-[#1e2723]/15 bg-transparent flex flex-col min-h-[400px]">
-              <div className="flex items-center justify-between mb-8">
-                <div>
-                  <h3 className="text-xl font-medium tracking-tight">Xu hướng doanh thu & sử dụng</h3>
-                  <p className="text-sm text-[#1e2723]/50 mt-1">Tổng quan hiệu suất cơ sở theo tháng</p>
+          {/* SECOND ROW: Charts & Dispatch */}
+          <div className="flex gap-6 mb-6">
+            
+            {/* Chart Section (2/3) */}
+            <div className="flex-1 bg-white border border-slate-200 rounded-xl p-6 shadow-sm flex flex-col">
+              <h3 className="font-bold text-lg text-slate-900">Biểu đồ Doanh thu & Tỷ lệ sử dụng</h3>
+              <p className="text-sm text-slate-500 mb-8">Hiệu suất 7 tháng gần nhất</p>
+              
+              {/* CSS Mock Bar Chart */}
+              <div className="flex-1 flex items-end gap-4 h-64 border-b border-slate-100 pb-2 relative">
+                {/* Y-Axis Lines */}
+                <div className="absolute inset-0 flex flex-col justify-between pointer-events-none pb-2 text-xs text-slate-400 font-medium">
+                  <div className="border-b border-slate-100 border-dashed w-full h-0 flex items-center"><span className="-mt-4 bg-white pr-2">$100k</span></div>
+                  <div className="border-b border-slate-100 border-dashed w-full h-0 flex items-center"><span className="-mt-4 bg-white pr-2">$75k</span></div>
+                  <div className="border-b border-slate-100 border-dashed w-full h-0 flex items-center"><span className="-mt-4 bg-white pr-2">$50k</span></div>
+                  <div className="border-b border-slate-100 border-dashed w-full h-0 flex items-center"><span className="-mt-4 bg-white pr-2">$25k</span></div>
                 </div>
-                <button className="text-[#1e2723]/50 hover:text-[#1e2723]">
-                  <MoreHorizontal className="w-5 h-5" strokeWidth={1.5} />
-                </button>
-              </div>
-              <div className="flex-1 w-full mt-4">
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1e272324" />
-                    <XAxis
-                      dataKey="name"
-                      axisLine={false}
-                      tickLine={false}
-                      ticks={['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Dec']}
-                      tick={{ fill: '#1e2723', opacity: 0.5, fontSize: 12 }}
-                      dy={10}
-                    />
-                    <YAxis
-                      axisLine={false}
-                      tickLine={false}
-                      ticks={[0, 25000, 50000, 100000]}
-                      tickFormatter={(value) => value === 0 ? '$0' : `$${value / 1000}k`}
-                      tick={{ fill: '#1e2723', opacity: 0.5, fontSize: 12 }}
-                    />
-                    <Tooltip
-                      cursor={{ fill: 'rgba(201, 164, 75, 0.1)' }}
-                      contentStyle={{ borderRadius: '12px', border: '1px solid rgba(30, 39, 35, 0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}
-                      formatter={(value: any) => [`$${value.toLocaleString()}`, 'Doanh thu']}
-                    />
-                    <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={40}>
-                      {chartData.map((_entry, index) => (
-                        <Cell key={`cell-${index}`} fill={index < 8 ? '#4a5751' : '#c9a44b'} />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-
-                {/* Custom Legend */}
-                <div className="flex items-center gap-6 mt-6 ml-6">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#4a5751]"></span>
-                    <span className="text-sm font-medium text-[#1e2723]/70">Doanh thu</span>
+                
+                {/* Bars */}
+                <div className="w-12 shrink-0"></div> {/* Spacer for Y-axis text */}
+                {chartData.map((data, index) => (
+                  <div key={index} className="flex-1 flex flex-col items-center justify-end group relative h-full pt-6">
+                    {/* Tooltip */}
+                    <div className="opacity-0 group-hover:opacity-100 absolute -top-4 bg-slate-900 text-white text-xs font-bold px-2 py-1 rounded transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                      ${data.revenue}k
+                    </div>
+                    {/* Bar */}
+                    <div 
+                      className={`w-full max-w-[48px] rounded-t-sm transition-all duration-300 ${data.active ? 'bg-emerald-600 shadow-md' : 'bg-slate-300 group-hover:bg-emerald-400'}`}
+                      style={{ height: `${data.revenue}%` }}
+                    ></div>
+                    <div className="mt-4 text-xs font-bold text-slate-500">{data.month}</div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#c9a44b]"></span>
-                    <span className="text-sm font-medium text-[#1e2723]/70">Chỉ số sử dụng</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
-            {/* Điều phối nhân sự Panel (1/3 width) */}
-            <div className="lg:col-span-1 p-8 rounded-3xl border border-[#1e2723]/15 bg-transparent flex flex-col">
-              <div className="flex items-center justify-between mb-8">
-                <h3 className="text-xl font-medium tracking-tight">Điều phối nhân sự</h3>
-                <button className="w-8 h-8 rounded-full bg-[#1e2723]/5 flex items-center justify-center hover:bg-[#1e2723]/10">
-                  <Plus className="w-4 h-4" strokeWidth={1.5} />
-                </button>
+            {/* Dispatch Section (1/3) */}
+            <div className="w-1/3 bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="font-bold text-lg text-slate-900">Điều phối nhân sự</h3>
+                <span className="bg-emerald-50 text-emerald-700 text-xs font-bold px-2 py-1 rounded-full border border-emerald-200">3 Trực ca</span>
               </div>
 
-              <div className="flex-1 space-y-4">
-                {/* Staff 1 */}
-                <div className="p-5 rounded-2xl border border-[#1e2723]/10 bg-white/30 hover:bg-white/60 transition-colors">
-                  <div className="flex items-center justify-between mb-4">
+              <div className="space-y-4">
+                <div className="border border-slate-200 rounded-lg p-4 bg-slate-50/50 hover:bg-slate-50 transition-colors">
+                  <div className="flex justify-between items-start mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-[#25352d] text-[#f2eee4] flex items-center justify-center font-medium text-sm">
-                        JL
-                      </div>
+                      <div className="w-8 h-8 rounded-full bg-slate-200 text-slate-600 font-bold flex items-center justify-center text-xs">PV</div>
                       <div>
-                        <p className="font-medium">Jordan Lee</p>
-                        <p className="text-xs text-[#1e2723]/50">Sẵn sàng</p>
+                        <div className="font-bold text-slate-900 text-sm">Phạm Văn D</div>
+                        <div className="text-xs text-slate-500 flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span> Sẵn sàng</div>
                       </div>
                     </div>
-                    <span className="w-2 h-2 rounded-full bg-green-500"></span>
                   </div>
                   <div className="flex gap-2">
-                    <button className="flex-1 py-2 text-xs font-medium border border-[#1e2723]/15 rounded-full hover:bg-white">Giao việc</button>
-                    <button className="flex-1 py-2 text-xs font-medium border border-[#1e2723]/15 rounded-full hover:bg-white flex items-center justify-center gap-1">
-                      Delegate <Send className="w-3 h-3" strokeWidth={1.5} />
-                    </button>
+                    <button className="flex-1 bg-white border border-slate-300 text-slate-700 text-xs font-bold py-1.5 rounded hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-200 transition-colors">Giao việc</button>
                   </div>
                 </div>
 
-                {/* Staff 2 */}
-                <div className="p-5 rounded-2xl border border-[#1e2723]/10 bg-white/30 hover:bg-white/60 transition-colors">
-                  <div className="flex items-center justify-between mb-4">
+                <div className="border border-slate-200 rounded-lg p-4 bg-slate-50/50 hover:bg-slate-50 transition-colors">
+                  <div className="flex justify-between items-start mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-[#c9a44b] text-[#1e2723] flex items-center justify-center font-medium text-sm">
-                        AM
-                      </div>
+                      <div className="w-8 h-8 rounded-full bg-slate-200 text-slate-600 font-bold flex items-center justify-center text-xs">TV</div>
                       <div>
-                        <p className="font-medium">Alex Morgan</p>
-                        <p className="text-xs text-[#1e2723]/50">Đang nghỉ</p>
+                        <div className="font-bold text-slate-900 text-sm">Trần Văn F</div>
+                        <div className="text-xs text-slate-500 flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block"></span> Đang xử lý sự cố</div>
                       </div>
                     </div>
-                    <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
                   </div>
                   <div className="flex gap-2">
-                    <button className="flex-1 py-2 text-xs font-medium border border-[#1e2723]/15 rounded-full hover:bg-white">Giao việc</button>
-                    <button className="flex-1 py-2 text-xs font-medium border border-[#1e2723]/15 rounded-full hover:bg-white flex items-center justify-center gap-1">
-                      Delegate <Send className="w-3 h-3" strokeWidth={1.5} />
-                    </button>
+                    <button className="flex-1 bg-white border border-slate-300 text-slate-700 text-xs font-bold py-1.5 rounded hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-200 transition-colors">Xem tiến độ</button>
                   </div>
                 </div>
+              </div>
+              <button className="w-full mt-4 bg-emerald-50 text-emerald-700 font-bold text-sm py-2 rounded-lg hover:bg-emerald-100 transition-colors">Xem toàn bộ ca trực</button>
+            </div>
 
+          </div>
+
+          {/* Table Section */}
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+            <div className="p-6 border-b border-slate-200 flex justify-between items-center">
+              <h3 className="font-bold text-lg text-slate-900">Quản lý Hợp đồng gần đây</h3>
+              <div className="flex gap-2">
+                <button className="bg-white border border-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-sm font-bold hover:bg-slate-50">Tạo mã giảm giá</button>
+                <button className="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-sm font-bold hover:bg-emerald-700">Gán kho (Assign)</button>
               </div>
             </div>
-          </section>
-
-          {/* 6. Bottom Row (Table) */}
-          <section className="p-8 rounded-3xl border border-[#1e2723]/15 bg-transparent overflow-hidden">
-            <div className="flex items-center justify-between mb-8">
-              <h3 className="text-xl font-medium tracking-tight">Quản lý Hợp đồng & Kho</h3>
-              <button className="text-sm font-medium text-[#1e2723]/60 hover:text-[#1e2723]">View All</button>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="border-b border-[#1e2723]/10">
-                    <th className="pb-4 font-medium text-xs uppercase tracking-widest text-[#1e2723]/50 px-4">Kho</th>
-                    <th className="pb-4 font-medium text-xs uppercase tracking-widest text-[#1e2723]/50 px-4">Khách hàng</th>
-                    <th className="pb-4 font-medium text-xs uppercase tracking-widest text-[#1e2723]/50 px-4">Trạng thái</th>
-                    <th className="pb-4 font-medium text-xs uppercase tracking-widest text-[#1e2723]/50 px-4 text-right">Thao tác</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#1e2723]/5">
-                  <tr className="hover:bg-[#e8e2d5] transition-colors">
-                    <td className="py-5 px-4">
-                      <p className="font-medium">Unit #B14</p>
-                      <p className="text-xs text-[#1e2723]/50">10x20ft Điều hòa</p>
-                    </td>
-                    <td className="py-5 px-4 font-medium">Sarah Jenkins</td>
-                    <td className="py-5 px-4">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-500/10 text-green-700 text-xs font-medium">
-                        <CheckCircle2 className="w-3 h-3" strokeWidth={2} /> Active
-                      </span>
-                    </td>
-                    <td className="py-5 px-4 text-right space-x-2">
-                      <button className="px-3 py-1.5 text-xs font-medium border border-[#1e2723]/15 rounded-lg hover:bg-white cursor-pointer transition-colors">Sửa giá</button>
-                      <button className="px-3 py-1.5 text-xs font-medium border border-[#1e2723]/15 rounded-lg hover:bg-white cursor-pointer transition-colors">Chỉ định kho</button>
-                    </td>
-                  </tr>
-
-                  <tr className="hover:bg-[#e8e2d5] transition-colors">
-                    <td className="py-5 px-4">
-                      <p className="font-medium">Unit #A05</p>
-                      <p className="text-xs text-[#1e2723]/50">5x5ft Tiêu chuẩn</p>
-                    </td>
-                    <td className="py-5 px-4 font-medium">Michael Chen</td>
-                    <td className="py-5 px-4">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/10 text-red-700 text-xs font-medium">
-                        <AlertCircle className="w-3 h-3" strokeWidth={2} /> Quá hạn
-                      </span>
-                    </td>
-                    <td className="py-5 px-4 text-right space-x-2 flex justify-end gap-2">
-                      <button className="px-3 py-1.5 text-xs font-medium border border-[#c9a44b]/30 rounded-lg bg-[#c9a44b]/10 text-[#b89543] hover:bg-[#c9a44b]/20 cursor-pointer transition-colors flex items-center">
-                        <Bell className="w-3 h-3 mr-1" strokeWidth={1.5} /> Nhắc nợ
-                      </button>
-                      <button className="px-3 py-1.5 text-xs font-medium border border-[#1e2723]/15 rounded-lg hover:bg-white cursor-pointer transition-colors">Sửa giá</button>
-                    </td>
-                  </tr>
-
-                  <tr className="hover:bg-[#e8e2d5] transition-colors">
-                    <td className="py-5 px-4">
-                      <p className="font-medium">Unit #C22</p>
-                      <p className="text-xs text-[#1e2723]/50">10x10ft Cao cấp</p>
-                    </td>
-                    <td className="py-5 px-4 text-[#1e2723]/40 italic">Trống</td>
-                    <td className="py-5 px-4">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#1e2723]/10 text-[#1e2723]/60 text-xs font-medium">
-                        Sẵn sàng
-                      </span>
-                    </td>
-                    <td className="py-5 px-4 text-right space-x-2">
-                      <button className="px-3 py-1.5 text-xs font-medium border border-[#1e2723]/15 rounded-lg hover:bg-[#1e2723]/90 bg-[#1e2723] text-[#f2eee4] cursor-pointer transition-colors">Chỉ định kho</button>
-                      <button className="px-3 py-1.5 text-xs font-medium border border-[#1e2723]/15 rounded-lg hover:bg-white cursor-pointer transition-colors">Sửa giá</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-slate-50 text-slate-500 text-xs uppercase font-bold tracking-wider">
+                  <th className="p-4 border-b border-slate-200">Mã HĐ</th>
+                  <th className="p-4 border-b border-slate-200">Khách hàng</th>
+                  <th className="p-4 border-b border-slate-200">Mã Kho</th>
+                  <th className="p-4 border-b border-slate-200">Thời hạn</th>
+                  <th className="p-4 border-b border-slate-200">Trạng thái</th>
+                  <th className="p-4 border-b border-slate-200 text-right">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody className="text-sm font-medium text-slate-900">
+                <tr className="hover:bg-slate-50 border-b border-slate-100">
+                  <td className="p-4 font-mono text-slate-500">HD-9921</td>
+                  <td className="p-4">Jordan Lee</td>
+                  <td className="p-4 font-bold text-slate-700">#B14</td>
+                  <td className="p-4">24/12/2026</td>
+                  <td className="p-4"><span className="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-full text-xs">Hoạt động</span></td>
+                  <td className="p-4 text-right"><button className="text-emerald-600 hover:text-emerald-800 font-bold">Chi tiết</button></td>
+                </tr>
+                <tr className="hover:bg-slate-50 border-b border-slate-100">
+                  <td className="p-4 font-mono text-slate-500">HD-9905</td>
+                  <td className="p-4">Elena Rodriguez</td>
+                  <td className="p-4 font-bold text-slate-700">#A05</td>
+                  <td className="p-4">20/09/2026</td>
+                  <td className="p-4"><span className="bg-rose-50 text-rose-700 border border-rose-200 px-2.5 py-1 rounded-full text-xs">Quá hạn nợ</span></td>
+                  <td className="p-4 text-right"><button className="text-rose-600 hover:text-rose-800 font-bold">Nhắc nhở nợ</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
         </div>
-      </main>
-
+      </div>
     </div>
   );
 }

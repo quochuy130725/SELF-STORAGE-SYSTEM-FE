@@ -1,246 +1,230 @@
 import { useState } from 'react';
-import { Search, ChevronDown, Edit2, Lock, Unlock, ShieldAlert, Users } from 'lucide-react';
-
-const mockUsers = [
-  { id: 1, name: 'Alice Johnson', email: 'alice.j@storageco.com', initials: 'AJ', role: 'Quản trị HT', facility: 'Tất cả cơ sở', status: 'Active', avatarBg: 'bg-rose-100 text-rose-700' },
-  { id: 2, name: 'Robert Chen', email: 'robert.c@storageco.com', initials: 'RC', role: 'Quản lý cơ sở', facility: 'Downtown Storage', status: 'Active', avatarBg: 'bg-blue-100 text-blue-700' },
-  { id: 3, name: 'Elena Rodriguez', email: 'elena.r@storageco.com', initials: 'ER', role: 'Nhân viên', facility: 'Westside Unit', status: 'Đã khóa', avatarBg: 'bg-amber-100 text-amber-700' },
-  { id: 4, name: 'Marcus Tyrell', email: 'm.tyrell@storageco.com', initials: 'MT', role: 'Quản lý cơ sở', facility: 'Northgate Storage', status: 'Active', avatarBg: 'bg-emerald-100 text-emerald-700' },
-  { id: 5, name: 'Sarah Jenkins', email: 's.jenkins@storageco.com', initials: 'SJ', role: 'Nhân viên', facility: 'Eastside Unit', status: 'Active', avatarBg: 'bg-purple-100 text-purple-700' },
-];
-
-const mockLogs = [
-  { id: 'L-1049', timestamp: '2026-09-24 16:45:12', user: 'alice.j@storageco.com', action: 'Thay đổi vai trò cho Robert Chen', detail: 'Thay đổi từ Nhân viên sang Quản lý cơ sở', ip: '192.168.1.45' },
-  { id: 'L-1048', timestamp: '2026-09-24 15:30:05', user: 'system', action: 'Sao lưu tự động hoàn tất', detail: 'Kích thước sao lưu: 4.2GB', ip: '10.0.0.1' },
-  { id: 'L-1047', timestamp: '2026-09-24 14:12:33', user: 'robert.c@storageco.com', action: 'Đăng nhập thành công', detail: 'Session ID: xcv-892-klm', ip: '172.16.254.1' },
-  { id: 'L-1046', timestamp: '2026-09-24 10:05:19', user: 'elena.r@storageco.com', action: 'Đăng nhập thất bại (3)', detail: 'Cung cấp sai mật khẩu', ip: '198.51.100.23' },
-  { id: 'L-1045', timestamp: '2026-09-24 10:05:20', user: 'system', action: 'Tài khoản bị khóa: elena.r@storageco.com', detail: 'Vượt quá số lần đăng nhập tối đa', ip: '10.0.0.1' },
-];
+import { Package, Search, Plus, Edit2, Lock, Shield } from 'lucide-react';
 
 export default function AdminPanel() {
-  const [activeTab, setActiveTab] = useState<'users' | 'logs'>('users');
+  const [activeTab, setActiveTab] = useState('users');
 
   return (
-    <div className="min-h-screen bg-[#f2eee4] text-[#1e2723] font-sans">
-      {/* Header */}
-      <header className="flex justify-between items-center py-4 px-8 border-b border-[#1e272324]">
-        <div className="font-medium tracking-wide flex items-center gap-2">
-          <ShieldAlert className="w-5 h-5 text-[#c9a44b]" />
-          <span>STORAGE / CO | ADMIN</span>
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+      {/* Top Navigation Bar */}
+      <div className="bg-white border-b border-slate-200 px-8 py-3 flex items-center justify-between sticky top-0 z-10 shadow-sm">
+        <div className="flex items-center gap-2">
+          <Package className="text-emerald-600" size={24} />
+          {/* LOGO: Ultra-bold Industrial Typography */}
+          <span className="font-black uppercase tracking-wide text-2xl text-slate-900 mt-0.5" style={{ fontFamily: "'Anton', sans-serif" }}>STORAGE SYS</span>
+          <span className="text-slate-400 font-medium ml-2">|</span>
+          <span className="text-slate-600 font-medium ml-2">Quản trị Hệ thống</span>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="flex flex-col text-right">
-            <span className="text-sm font-medium">Quản trị viên</span>
-            <span className="text-xs text-[#1e2723]/60">Quản trị Hệ thống</span>
-          </div>
-          <div className="w-10 h-10 rounded-full bg-[#1e2723] text-[#f2eee4] flex items-center justify-center font-medium">
-            AD
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-8 py-10">
         
-        {/* Tabs */}
-        <div className="relative flex border-b border-[#1e272324] mb-10">
+        <div className="flex items-center gap-4">
+          <div className="text-right hidden sm:block">
+            <div className="text-sm font-bold text-slate-900">Trần Văn A</div>
+            <div className="text-xs text-slate-500">System Admin</div>
+          </div>
+          <div className="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center font-bold text-sm">TA</div>
+        </div>
+      </div>
+
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto py-8 px-6">
+        
+        {/* Tab Switcher */}
+        <div className="flex gap-6 border-b border-slate-200 mb-8">
           <button 
             onClick={() => setActiveTab('users')}
-            className={`pb-4 px-6 font-medium transition-colors cursor-pointer ${
-              activeTab === 'users' ? 'text-[#1e2723]' : 'text-[#1e2723]/60 hover:text-[#1e2723]'
-            }`}
+            className={`pb-3 font-bold text-sm transition-colors relative ${activeTab === 'users' ? 'text-emerald-600' : 'text-slate-500 hover:text-slate-900'}`}
           >
             Quản lý Người dùng
+            {activeTab === 'users' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-600"></div>}
           </button>
           <button 
             onClick={() => setActiveTab('logs')}
-            className={`pb-4 px-6 font-medium transition-colors cursor-pointer ${
-              activeTab === 'logs' ? 'text-[#1e2723]' : 'text-[#1e2723]/60 hover:text-[#1e2723]'
-            }`}
+            className={`pb-3 font-bold text-sm transition-colors relative ${activeTab === 'logs' ? 'text-emerald-600' : 'text-slate-500 hover:text-slate-900'}`}
           >
-            Nhật ký hệ thống
+            Nhật ký hệ thống (System Logs)
+            {activeTab === 'logs' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-600"></div>}
           </button>
-          <div 
-            className="absolute bottom-[-1px] h-[2px] bg-[#c9a44b] transition-all duration-300 ease-out"
-            style={{ 
-              width: activeTab === 'users' ? '160px' : '150px', 
-              left: activeTab === 'users' ? '8px' : '182px' 
-            }}
-          />
         </div>
 
-        {/* Tab 1: Quản lý Người dùng */}
+        {/* TAB 1: USER MANAGEMENT */}
         {activeTab === 'users' && (
-          <div className="animate-in fade-in duration-300">
-            <div className="flex justify-between items-end mb-8">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-[#c9a44b] mb-2 font-semibold">
-                  QUẢN TRỊ / NGƯỜI DÙNG
-                </div>
-                <h2 className="text-4xl md:text-5xl font-serif tracking-tight">Quyền & Vai trò</h2>
+          <div className="animate-fade-in-up">
+            <div className="flex justify-between items-center mb-6">
+              <div className="relative w-80">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <input 
+                  type="text" 
+                  placeholder="Tìm kiếm tài khoản..." 
+                  className="w-full pl-10 pr-4 py-2 bg-white border border-slate-300 rounded-lg text-sm font-medium focus:outline-none focus:border-emerald-500 shadow-sm"
+                />
               </div>
-              <button className="bg-[#c9a44b] text-[#1e2723] px-6 py-3 rounded-xl font-medium hover:bg-[#b89543] transition-colors cursor-pointer border-0 shadow-sm flex items-center gap-2">
-                <span>+</span> Tạo tài khoản mới
+              <button className="bg-emerald-600 text-white px-5 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-emerald-700 shadow-sm transition-colors">
+                <Plus size={18} /> Tạo tài khoản mới
               </button>
             </div>
 
-            <div className="bg-[#f8f6f0] rounded-2xl border border-[#1e272324] overflow-hidden">
-              {/* Card Header */}
-              <div className="flex items-center gap-3 p-6 border-b border-[#1e272324] bg-white/50">
-                <Users className="w-5 h-5 text-[#1e2723]/60" />
-                <h3 className="font-medium text-lg">Thành viên nhóm</h3>
-                <span className="bg-[#e4dfd4] text-[#1e2723] text-xs font-semibold px-2 py-0.5 rounded-md ml-1">05</span>
-              </div>
-
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-transparent">
-                    <th className="px-6 py-4 text-left font-medium text-xs uppercase tracking-wider text-[#1e2723]/60 border-b border-[#1e272324]">Người dùng</th>
-                    <th className="px-6 py-4 text-left font-medium text-xs uppercase tracking-wider text-[#1e2723]/60 border-b border-[#1e272324]">Vai trò</th>
-                    <th className="px-6 py-4 text-left font-medium text-xs uppercase tracking-wider text-[#1e2723]/60 border-b border-[#1e272324]">Truy cập cơ sở</th>
-                    <th className="px-6 py-4 text-left font-medium text-xs uppercase tracking-wider text-[#1e2723]/60 border-b border-[#1e272324]">Trạng thái</th>
-                    <th className="px-6 py-4 text-right font-medium text-xs uppercase tracking-wider text-[#1e2723]/60 border-b border-[#1e272324]">Thao tác</th>
+                  <tr className="bg-slate-50 text-slate-500 text-xs uppercase font-bold tracking-wider">
+                    <th className="p-4 border-b border-slate-200 w-1/3">Người dùng</th>
+                    <th className="p-4 border-b border-slate-200">Vai trò</th>
+                    <th className="p-4 border-b border-slate-200">Cơ sở truy cập</th>
+                    <th className="p-4 border-b border-slate-200">Trạng thái</th>
+                    <th className="p-4 border-b border-slate-200 text-right">Thao tác</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1e272324]">
-                  {mockUsers.map((user) => (
-                    <tr key={user.id} className="hover:bg-white/60 transition-colors group">
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-4">
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${user.avatarBg}`} title={user.name}>
-                            {user.initials}
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="font-semibold text-[#1e2723]">{user.name}</span>
-                            <span className="text-sm text-gray-500">{user.email}</span>
-                          </div>
+                <tbody className="text-sm">
+                  {/* Row 1 */}
+                  <tr className="hover:bg-slate-50 border-b border-slate-100 group transition-colors">
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-600 font-bold flex items-center justify-center">TA</div>
+                        <div>
+                          <div className="font-bold text-slate-900">Trần Văn A</div>
+                          <div className="text-xs text-slate-500 mt-0.5">tran.a@storageco.com</div>
                         </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="inline-flex items-center px-3 py-1 rounded-full border border-[#1e2723]/10 bg-[#f2eee4] text-sm font-medium text-[#1e2723]">
-                          {user.role}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-[#1e2723]/80">{user.facility}</td>
-                      <td className="px-6 py-4">
-                        <span className={`inline-flex items-center gap-1.5 text-sm font-medium ${
-                          user.status === 'Active' ? 'text-green-700' : 'text-red-600'
-                        }`}>
-                          <span className={`w-1.5 h-1.5 rounded-full ${user.status === 'Active' ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                          {user.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <div className="flex justify-end gap-1 opacity-100 transition-opacity">
-                          <button className="p-2 rounded-lg hover:bg-amber-50 text-[#1e2723]/60 hover:text-amber-500 transition-all cursor-pointer" title="Chỉnh sửa">
-                            <Edit2 className="w-4 h-4" />
-                          </button>
-                          <button className={`p-2 rounded-lg transition-all cursor-pointer ${
-                            user.status === 'Đã khóa' ? 'text-red-600 hover:bg-red-50' : 'text-[#1e2723]/60 hover:text-red-600 hover:bg-red-50'
-                          }`} title={user.status === 'Đã khóa' ? "Mở khóa" : "Khóa tài khoản"}>
-                            {user.status === 'Đã khóa' ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
-                          </button>
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-2.5 py-1 rounded-md">
+                        <Shield size={12}/> Quản trị HT
+                      </span>
+                    </td>
+                    <td className="p-4 font-medium text-slate-700">Tất cả cơ sở</td>
+                    <td className="p-4">
+                      <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-full text-xs font-bold">Hoạt động</span>
+                    </td>
+                    <td className="p-4 text-right">
+                      <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button className="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors border border-transparent hover:border-emerald-200" title="Chỉnh sửa phân quyền"><Edit2 size={16} /></button>
+                        <button className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors border border-transparent hover:border-rose-200" title="Khóa tài khoản"><Lock size={16} /></button>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                  {/* Row 2 */}
+                  <tr className="hover:bg-slate-50 border-b border-slate-100 group transition-colors">
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-600 font-bold flex items-center justify-center">NB</div>
+                        <div>
+                          <div className="font-bold text-slate-900">Nguyễn Thị B</div>
+                          <div className="text-xs text-slate-500 mt-0.5">nguyen.b@storageco.com</div>
                         </div>
-                      </td>
-                    </tr>
-                  ))}
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <span className="inline-flex items-center gap-1.5 bg-slate-100 text-slate-700 border border-slate-200 text-xs font-bold px-2.5 py-1 rounded-md">
+                        Quản lý cơ sở
+                      </span>
+                    </td>
+                    <td className="p-4 font-medium text-slate-700">Cơ sở Trung tâm</td>
+                    <td className="p-4">
+                      <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-full text-xs font-bold">Hoạt động</span>
+                    </td>
+                    <td className="p-4 text-right">
+                      <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button className="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors border border-transparent hover:border-emerald-200"><Edit2 size={16} /></button>
+                        <button className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors border border-transparent hover:border-rose-200"><Lock size={16} /></button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* Row 3 - Locked */}
+                  <tr className="hover:bg-slate-50 border-b border-slate-100 group transition-colors bg-slate-50/50">
+                    <td className="p-4 opacity-60">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-slate-200 text-slate-400 font-bold flex items-center justify-center">LC</div>
+                        <div>
+                          <div className="font-bold text-slate-900">Lê Văn C</div>
+                          <div className="text-xs text-slate-500 mt-0.5">le.c@storageco.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-4 opacity-60">
+                      <span className="inline-flex items-center gap-1.5 bg-slate-100 text-slate-700 border border-slate-200 text-xs font-bold px-2.5 py-1 rounded-md">
+                        Nhân viên
+                      </span>
+                    </td>
+                    <td className="p-4 font-medium text-slate-700 opacity-60">Cơ sở Quận 1</td>
+                    <td className="p-4">
+                      <span className="bg-rose-50 text-rose-700 border border-rose-200 px-2.5 py-1 rounded-full text-xs font-bold">Đã khóa</span>
+                    </td>
+                    <td className="p-4 text-right">
+                      <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button className="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors border border-transparent hover:border-emerald-200"><Edit2 size={16} /></button>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
           </div>
         )}
 
-        {/* Tab 2: Nhật ký hệ thống */}
+        {/* TAB 2: SYSTEM LOGS */}
         {activeTab === 'logs' && (
-          <div className="animate-in fade-in duration-300">
-            <div className="text-xs uppercase tracking-widest text-[#c9a44b] mb-2 font-semibold">
-              QUẢN TRỊ / HOẠT ĐỘNG
-            </div>
-            <h2 className="text-4xl md:text-5xl font-serif tracking-tight mb-8">Nhật ký hệ thống</h2>
-            
-            {/* Filter Bar */}
-            <div className="flex gap-4 mb-8">
+          <div className="animate-fade-in-up">
+            <div className="flex gap-4 mb-6">
               <div className="relative flex-1 max-w-md">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-4 w-4 text-[#1e2723]/40" />
-                </div>
-                <input 
-                  type="text" 
-                  placeholder="Tìm kiếm nhật ký..." 
-                  className="w-full bg-white/50 border border-[#1e272324] rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-[#c9a44b] focus:ring-1 focus:ring-[#c9a44b] transition-all shadow-sm"
-                />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <input type="text" placeholder="Tra cứu Log hệ thống..." className="w-full pl-10 pr-4 py-2 bg-white border border-slate-300 rounded-lg text-sm font-medium focus:outline-none focus:border-emerald-500 shadow-sm" />
               </div>
-              <div className="relative w-48">
-                <select className="w-full bg-white/50 border border-[#1e272324] rounded-xl px-4 py-2.5 text-sm appearance-none focus:outline-none focus:border-[#c9a44b] cursor-pointer shadow-sm">
-                  <option value="">Lọc theo Người dùng</option>
-                  <option value="alice.j@storageco.com">Alice Johnson</option>
-                  <option value="system">System</option>
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-[#1e2723]/60">
-                  <ChevronDown className="w-4 h-4" />
-                </div>
-              </div>
-              <div className="relative w-48">
-                <select className="w-full bg-white/50 border border-[#1e272324] rounded-xl px-4 py-2.5 text-sm appearance-none focus:outline-none focus:border-[#c9a44b] cursor-pointer shadow-sm">
-                  <option value="">Lọc theo Ngày</option>
-                  <option value="today">Hôm nay</option>
-                  <option value="7days">7 Ngày qua</option>
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-[#1e2723]/60">
-                  <ChevronDown className="w-4 h-4" />
-                </div>
-              </div>
+              <select className="bg-white border border-slate-300 rounded-lg px-4 py-2 text-sm font-medium text-slate-700 outline-none focus:border-emerald-500 shadow-sm">
+                <option>Lọc theo User</option>
+                <option>Trần Văn A</option>
+                <option>System</option>
+              </select>
+              <select className="bg-white border border-slate-300 rounded-lg px-4 py-2 text-sm font-medium text-slate-700 outline-none focus:border-emerald-500 shadow-sm">
+                <option>7 Ngày qua</option>
+                <option>Hôm nay</option>
+              </select>
             </div>
 
-            <div className="bg-[#1e2723] text-white rounded-2xl overflow-hidden shadow-xl border border-[#2a3832]">
-              {/* Dark Card Header */}
-              <div className="flex items-center justify-between p-5 border-b border-white/10 bg-[#25352d]">
-                <h3 className="font-medium text-sm tracking-wide">Luồng hoạt động</h3>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                  <span className="text-xs font-semibold tracking-widest text-white/60">TRỰC TIẾP - 5 MỤC</span>
-                </div>
-              </div>
-
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead className="bg-[#1e2723]">
-                    <tr>
-                      <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-white/40 border-b border-white/10">Thời gian</th>
-                      <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-white/40 border-b border-white/10">Người dùng</th>
-                      <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-white/40 border-b border-white/10">Hành động Details</th>
-                      <th className="px-6 py-4 text-xs font-medium uppercase tracking-wider text-white/40 border-b border-white/10 text-right">Địa chỉ IP</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/5 bg-[#1e2723]">
-                    {mockLogs.map((log) => (
-                      <tr key={log.id} className="hover:bg-white/5 transition-colors">
-                        <td className="px-6 py-5 whitespace-nowrap">
-                          <span className="font-mono text-sm text-[#c9a44b]">{log.timestamp}</span>
-                        </td>
-                        <td className="px-6 py-5">
-                          <span className="text-sm font-bold text-white">
-                            {log.user}
-                          </span>
-                        </td>
-                        <td className="px-6 py-5">
-                          <div className="flex flex-col">
-                            <span className="text-sm text-white font-medium">{log.action}</span>
-                            <span className="text-xs text-white/50 mt-1">{log.detail}</span>
-                          </div>
-                        </td>
-                        <td className="px-6 py-5 text-right whitespace-nowrap">
-                          <span className="font-mono text-sm text-[#8fa291]">{log.ip}</span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  {/* Tech Terminal Header Style */}
+                  <tr className="bg-slate-900 text-slate-300 text-xs uppercase font-bold tracking-wider">
+                    <th className="px-4 py-3 border-b border-slate-800 w-48">Timestamp</th>
+                    <th className="px-4 py-3 border-b border-slate-800 w-1/4">User</th>
+                    <th className="px-4 py-3 border-b border-slate-800">Action Performed</th>
+                    <th className="px-4 py-3 border-b border-slate-800 w-48 text-right">IP / Origin</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm">
+                  <tr className="hover:bg-slate-50 border-b border-slate-100">
+                    <td className="px-4 py-2.5 font-mono text-xs text-slate-500">2026-09-24 19:45:12</td>
+                    <td className="px-4 py-2.5 font-bold text-slate-800">Trần Văn A</td>
+                    <td className="px-4 py-2.5 text-slate-600">Updated role for <span className="font-semibold text-slate-900">Lê Văn C</span> to <span className="text-rose-600">Locked</span></td>
+                    <td className="px-4 py-2.5 font-mono text-xs text-emerald-600 text-right bg-slate-50/50">192.168.1.45</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 border-b border-slate-100">
+                    <td className="px-4 py-2.5 font-mono text-xs text-slate-500">2026-09-24 15:30:05</td>
+                    <td className="px-4 py-2.5 font-bold text-slate-800">System (Auto)</td>
+                    <td className="px-4 py-2.5 text-slate-600">Automated database backup completed successfully.</td>
+                    <td className="px-4 py-2.5 font-mono text-xs text-slate-400 text-right">10.0.0.1 (Local)</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 border-b border-slate-100">
+                    <td className="px-4 py-2.5 font-mono text-xs text-slate-500">2026-09-24 14:12:33</td>
+                    <td className="px-4 py-2.5 font-bold text-slate-800">Nguyễn Thị B</td>
+                    <td className="px-4 py-2.5 text-slate-600">Logged in successfully. Session ID: x92k1</td>
+                    <td className="px-4 py-2.5 font-mono text-xs text-emerald-600 text-right bg-slate-50/50">172.16.254.1</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 border-b border-slate-100">
+                    <td className="px-4 py-2.5 font-mono text-xs text-slate-500">2026-09-24 10:05:19</td>
+                    <td className="px-4 py-2.5 font-bold text-slate-800">Lê Văn C</td>
+                    <td className="px-4 py-2.5 text-slate-600">Failed login attempt (3/3). Triggering security lockout.</td>
+                    <td className="px-4 py-2.5 font-mono text-xs text-amber-600 text-right bg-amber-50">198.51.100.23</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         )}
-      </main>
+
+      </div>
     </div>
   );
 }
